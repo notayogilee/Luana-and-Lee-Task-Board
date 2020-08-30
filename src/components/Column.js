@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 import Task from '../components/Task';
 import TaskCard from '../components/TaskCard';
+import ViewCard from '../components/ViewCard';
 
 const Container = styled.div`
 margin: 8px;
@@ -26,7 +27,12 @@ min-height: 100px;
 
 // Need min-height to be able to drag and drop onto empty column
 
-const Column = ({ column, tasks, index }) => {
+const Column = ({ column, tasks, index, columns, updateTask }) => {
+  function edit(taskId, task) {
+    console.log(taskId, task, "edit",)
+    updateTask(taskId, task)
+  }
+
   return (
     <Draggable draggableId={column.id} index={index}>
       {provided => (
@@ -46,11 +52,11 @@ const Column = ({ column, tasks, index }) => {
                 {...provided.droppableProps}
                 isDraggingOver={snapshot.isDraggingOver}
               >
-                {tasks.map((task, index) =>
+                {/* {tasks.map((task, index) =>
                   <Task key={task.id} task={task} index={index} />
-                )}
+                )} */}
                 {tasks.map((task, index) =>
-                  <TaskCard key={task.id} task={task} index={index} />
+                  <ViewCard key={task.id} task={task} index={index} columns={columns} edit={edit} />
                 )}
                 {provided.placeholder}
               </TaskList>

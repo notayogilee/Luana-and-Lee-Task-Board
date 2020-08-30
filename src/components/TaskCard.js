@@ -15,7 +15,8 @@ import {
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import DeleteIcon from '@material-ui/icons/Delete';
-import EditIcon from '@material-ui/icons/Edit';
+import SaveIcon from '@material-ui/icons/Save';
+
 
 //import './TaskCard.scss';
 import 'fontsource-roboto';
@@ -63,8 +64,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const TaskCard = ({ task, index }) => {
+const TaskCard = ({ task, index, edit }) => {
   const classes = useStyles();
+  const [title, setTitle] = React.useState(task.title || "");
+  const [content, setContent] = React.useState(task.content || "");
+  const [clickedSave, setClickedSave] = React.useState(false);
   const [age, setAge] = React.useState('');
   const [open, setOpen] = React.useState(false);
 
@@ -80,124 +84,95 @@ const TaskCard = ({ task, index }) => {
     setOpen(true);
   };
 
+  function save(id) {
+    console.log(id, 'savefunction');
+    const task = {
+      id,
+      title,
+      content,
+    };
+
+    edit(id, task)
+    setClickedSave((prev) => !prev);
+  }
+
 
   return (
-    <Draggable draggableId={task.id} index={index}>
-      {(provided, snapshot) => (
-        <Container
-          {...provided.draggableProps}
-          {...provided.dragHandleProps}
-          ref={provided.innerRef}
-          isDragging={snapshot.isDragging}
-        >
-          {/* <Handle {...provided.dragHandleProps} /> */}
-          {task.content}
+    <React.Fragment>
+      <Draggable draggableId={task.id} index={index}>
+        {(provided, snapshot) => (
+          <Container
+            {...provided.draggableProps}
+            {...provided.dragHandleProps}
+            ref={provided.innerRef}
+            isDragging={snapshot.isDragging}
+          >
+            {/* <Handle {...provided.dragHandleProps} /> */}
+            {/* {task.content} */}
 
-          <form noValidate autoComplete="off">
-            <Card className={classes.root}>
-              <Input placeholder="Title" inputProps={{ 'aria-label': 'description' }} style={{ width: "100%", marginBottom: "5%"}} />
-              <TextField
-                id="filled-multiline-static"
-                placeholder="Describe..."
-                multiline
-                rows={4}
-                variant="filled"
-                style={{width: "100%"}}
-              />
-              <div>
-                <IconButton aria-label="delete" className={classes.margin}>
-                  <EditIcon fontSize="small" />
-                </IconButton>
-                <IconButton aria-label="delete" className={classes.margin}>
-                  <DeleteIcon fontSize="small" />
-                </IconButton>
-                
-                <FormControl variant="outlined" size="small" className={classes.formControl}>
-                  <InputLabel htmlFor="outlined-age-native-simple">Move to...</InputLabel>
-                  <Select
-                    label="Move to..."
-                    open={open}
-                    onClose={handleClose}
-                    onOpen={handleOpen}
-                    value={age}
-                    onChange={handleChange}
+            <form noValidate autoComplete="off" onSubmit={event => event.preventDefault()}>
+              <Card className={classes.root}>
+                <Input
+                  placeholder="Title"
+                  inputProps={{ 'aria-label': 'description' }}
+                  style={{ width: "100%", marginBottom: "5%"}}
+                  value={title} 
+                  onChange={ event => setTitle(event.target.value) }
+                />
+                <TextField
+                  id="filled-multiline-static"
+                  placeholder="Describe..."
+                  multiline
+                  rows={4}
+                  variant="filled"
+                  style={{width: "100%"}}
+                  value={content}
+                  onChange={ event => setContent(event.target.value) }
+                >
+                </TextField>
+                <div>
+                  <IconButton
+                    aria-label="save"
+                    className={classes.margin}
+                    onClick={ event => save(task.id) }
                   >
-                    <MenuItem value="">
-                      <em>None</em>
-                    </MenuItem>
-                    <MenuItem value={10}>To Do</MenuItem>
-                    <MenuItem value={20}>In Progress</MenuItem>
-                    <MenuItem value={30}>Completed</MenuItem>
-                  </Select>
-                </FormControl>
-              </div>
-            </Card>
-          </form>
-        </Container>
-      )}
-    </Draggable>
+                    <SaveIcon fontSize="small" />
+                  </IconButton>
+                  <IconButton aria-label="delete" className={classes.margin}>
+                    <DeleteIcon fontSize="small" />
+                  </IconButton>
+                  
+                  <FormControl variant="outlined" size="small" className={classes.formControl}>
+                    <InputLabel htmlFor="outlined-age-native-simple">Move to...</InputLabel>
+                    <Select
+                      label="Move to..."
+                      open={open}
+                      onClose={handleClose}
+                      onOpen={handleOpen}
+                      value={age}
+                      onChange={handleChange}
+                    >
+                      <MenuItem value="">
+                        <em>None</em>
+                      </MenuItem>
+                      <MenuItem value={10}>To Do</MenuItem>
+                      <MenuItem value={20}>In Progress</MenuItem>
+                      <MenuItem value={30}>Completed</MenuItem>
+                    </Select>
+                  </FormControl>
+                </div>
+              </Card>
+            </form>
+          </Container>
+        )}
+      </Draggable>
+    </React.Fragment>
   )
 }
 
 export default TaskCard;
 
-// export default function TaskCard(props) {
-//   const classes = useStyles();
-//   const [age, setAge] = React.useState('');
-//   const [open, setOpen] = React.useState(false);
 
-//   const handleChange = (event) => {
-//     setAge(event.target.value);
-//   };
-
-//   const handleClose = () => {
-//     setOpen(false);
-//   };
-
-//   const handleOpen = () => {
-//     setOpen(true);
-//   };
-
-//   return (
-//     <form noValidate autoComplete="off">
-//       <Card className={classes.root}>
-//         <Input placeholder="Title" inputProps={{ 'aria-label': 'description' }} style={{ width: "100%", marginBottom: "5%"}} />
-//         <TextField
-//           id="filled-multiline-static"
-//           placeholder="Describe..."
-//           multiline
-//           rows={4}
-//           variant="filled"
-//           style={{width: "100%"}}
-//         />
-//         <div>
-//           <IconButton aria-label="delete" className={classes.margin}>
-//             <EditIcon fontSize="small" />
-//           </IconButton>
-//           <IconButton aria-label="delete" className={classes.margin}>
-//             <DeleteIcon fontSize="small" />
-//           </IconButton>
-          
-//           <FormControl variant="outlined" size="small" className={classes.formControl}>
-//             <InputLabel htmlFor="outlined-age-native-simple">Move to...</InputLabel>
-//             <Select
-//               label="Move to..."
-//               open={open}
-//               onClose={handleClose}
-//               onOpen={handleOpen}
-//               value={age}
-//               onChange={handleChange}
-//             >
-//               <MenuItem value="">
-//                 <em>None</em>
-//               </MenuItem>
-//               <MenuItem value={10}>To Do</MenuItem>
-//               <MenuItem value={20}>In Progress</MenuItem>
-//               <MenuItem value={30}>Completed</MenuItem>
-//             </Select>
-//           </FormControl>
-//         </div>
-//       </Card>
-//     </form>
-//   )
-// }
+// replace view when edit is clicked
+// make save button work
+// not show after deliting from view card
