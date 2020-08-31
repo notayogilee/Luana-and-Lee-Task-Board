@@ -2,6 +2,7 @@
   "name": "Luana-and-Lee-Task-Board",
   "description": "This project was generated from the Mintbean react-gh-pages template using the mintbean-cli tool.",
   "version": "0.1.0",
+  "homepage": ".",
   "private": true,
   "proxy": "http://localhost:3000",
   "scripts": {
