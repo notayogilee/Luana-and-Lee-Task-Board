@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 import Task from '../components/Task';
 import TaskCard from '../components/TaskCard';
+import initialData from '../initial-data';
 
 const Container = styled.div`
 margin: 8px;
