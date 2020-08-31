@@ -1,9 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
-import Task from '../components/Task';
-import TaskCard from '../components/TaskCard';
-import ViewCard from '../components/ViewCard';
+import MainCard from '../components/MainCard';
 
 const Container = styled.div`
 margin: 8px;
@@ -56,7 +54,7 @@ const Column = ({ column, tasks, index, columns, updateTask }) => {
                   <Task key={task.id} task={task} index={index} />
                 )} */}
                 {tasks.map((task, index) =>
-                  <ViewCard key={task.id} task={task} index={index} columns={columns} edit={edit} />
+                  <MainCard key={task.id} task={task} index={index} columns={columns} edit={edit} />
                 )}
                 {provided.placeholder}
               </TaskList>

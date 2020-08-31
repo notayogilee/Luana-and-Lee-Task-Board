@@ -15,8 +15,10 @@ import {
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import DeleteIcon from '@material-ui/icons/Delete';
-import SaveIcon from '@material-ui/icons/Save';
+import EditIcon from '@material-ui/icons/Edit';
 
+import EditCard from './EditCard';
+import ViewCard from './ViewCard';
 
 //import './TaskCard.scss';
 import 'fontsource-roboto';
@@ -64,11 +66,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const TaskCard = ({ task, index, edit }) => {
+const MainCard = ({ task, index, columns, edit }) => {
   const classes = useStyles();
+  const [clickedEdit, setClickedEdit] = React.useState(false);
+  const [clickedDelete, setClickedDelete] = React.useState(false);
+  const [clickedSave, setClickedSave] = React.useState(false);
   const [title, setTitle] = React.useState(task.title || "");
   const [content, setContent] = React.useState(task.content || "");
-  const [clickedSave, setClickedSave] = React.useState(false);
   const [age, setAge] = React.useState('');
   const [open, setOpen] = React.useState(false);
 
@@ -84,6 +88,14 @@ const TaskCard = ({ task, index, edit }) => {
     setOpen(true);
   };
 
+  const handleChangeEdit = () => {
+    setClickedEdit((prev) => !prev);
+  };
+
+  const handleChangeDelete = () => {
+    setClickedDelete((prev) => !prev);
+  };
+
   function save(id) {
     console.log(id, 'savefunction');
     const task = {
@@ -95,6 +107,15 @@ const TaskCard = ({ task, index, edit }) => {
     edit(id, task)
     setClickedSave((prev) => !prev);
   }
+
+  // function DeleteTask() {
+  //   DeleteTask(task.id)
+  //   .then(res => {
+  //     handleChangeDelete()
+  //     setDeleting(prev => !prev);
+  //   })
+  //   .catch(err => console.log(err))
+  // }
 
 
   return (
@@ -112,33 +133,32 @@ const TaskCard = ({ task, index, edit }) => {
 
             <form noValidate autoComplete="off" onSubmit={event => event.preventDefault()}>
               <Card className={classes.root}>
-                <Input
-                  placeholder="Title"
-                  inputProps={{ 'aria-label': 'description' }}
-                  style={{ width: "100%", marginBottom: "5%"}}
-                  value={title} 
-                  onChange={ event => setTitle(event.target.value) }
-                />
-                <TextField
-                  id="filled-multiline-static"
-                  placeholder="Describe..."
-                  multiline
-                  rows={4}
-                  variant="filled"
-                  style={{width: "100%"}}
-                  value={content}
-                  onChange={ event => setContent(event.target.value) }
-                >
-                </TextField>
+                { !clickedEdit &&
+                  <ViewCard
+                    key={task.id}
+                    task={task}
+                    index={index}
+                  /> 
+                }
+                { clickedEdit &&
+                  <EditCard
+                    key={task.id}
+                    task={task}
+                    index={index}
+                    onSetTitle={setTitle}
+                    onSetContent={setContent}
+                  /> 
+                }
                 <div>
                   <IconButton
-                    aria-label="save"
+                    aria-label="edit"
                     className={classes.margin}
-                    onClick={ event => save(task.id) }
+                    alt="Edit"
+                    onClick={handleChangeEdit}
                   >
-                    <SaveIcon fontSize="small" />
+                    <EditIcon fontSize="small" />
                   </IconButton>
-                  <IconButton aria-label="delete" className={classes.margin}>
+                  <IconButton aria-label="delete" className={classes.margin} onClick={handleChangeEdit}>
                     <DeleteIcon fontSize="small" />
                   </IconButton>
                   
@@ -155,6 +175,10 @@ const TaskCard = ({ task, index, edit }) => {
                       <MenuItem value="">
                         <em>None</em>
                       </MenuItem>
+                      {Object.values(columns).map((column) => {
+                          return <MenuItem value={column.id} key={column.id}>{column.title}</MenuItem>
+                        })
+                      }
                     </Select>
                   </FormControl>
                 </div>
@@ -167,9 +191,6 @@ const TaskCard = ({ task, index, edit }) => {
   )
 }
 
-export default TaskCard;
+export default MainCard;
 
 
-// replace view when edit is clicked
-// make save button work
-// not show after deliting from view card
