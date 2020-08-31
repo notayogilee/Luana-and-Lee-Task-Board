@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import { Draggable } from 'react-beautiful-dnd';
 import {
-  Typography,
   TextField,
   Card,
   Input,
@@ -10,7 +9,6 @@ import {
   FormControl,
   InputLabel,
   Select,
-  Button,
   MenuItem,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
@@ -95,14 +93,14 @@ const TaskCard = ({ task, index }) => {
 
           <form noValidate autoComplete="off">
             <Card className={classes.root}>
-              <Input placeholder="Title" inputProps={{ 'aria-label': 'description' }} style={{ width: "100%", marginBottom: "5%"}} />
+              <Input placeholder="Title" inputProps={{ 'aria-label': 'description' }} style={{ width: "100%", marginBottom: "5%" }} />
               <TextField
                 id="filled-multiline-static"
                 placeholder="Describe..."
                 multiline
                 rows={4}
                 variant="filled"
-                style={{width: "100%"}}
+                style={{ width: "100%" }}
               />
               <div>
                 <IconButton aria-label="delete" className={classes.margin}>
@@ -111,7 +109,7 @@ const TaskCard = ({ task, index }) => {
                 <IconButton aria-label="delete" className={classes.margin}>
                   <DeleteIcon fontSize="small" />
                 </IconButton>
-                
+
                 <FormControl variant="outlined" size="small" className={classes.formControl}>
                   <InputLabel htmlFor="outlined-age-native-simple">Move to...</InputLabel>
                   <Select
@@ -177,7 +175,7 @@ export default TaskCard;
 //           <IconButton aria-label="delete" className={classes.margin}>
 //             <DeleteIcon fontSize="small" />
 //           </IconButton>
-          
+
 //           <FormControl variant="outlined" size="small" className={classes.formControl}>
 //             <InputLabel htmlFor="outlined-age-native-simple">Move to...</InputLabel>
 //             <Select
