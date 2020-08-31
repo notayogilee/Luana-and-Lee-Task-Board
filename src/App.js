@@ -11,25 +11,20 @@ display: flex;
 
 function App() {
 
-
   const [data, setData] = useState(initialData);
   const { columnOrder, columns, tasks } = data;
-  const [columnsState, setColumnsState] = useState(columns);
+
+  console.log('data', data, 'columns', columns, 'tasks', tasks)
 
   // Add style to drags
 
   const onDragStart = () => {
     document.body.style.color = 'orange';
-    // transition on background color
-    // document.body.style.transition = 'background-color 0.2s ease';
   }
 
   const onDragUpdate = update => {
     // change background color moving down or up column
     const { destination } = update;
-    // const opacity = destination
-    //   ? destination.index / Object.keys(tasks).length : 0;
-    // document.body.style.backgroundColor = `rgba(153, 141, 217, ${opacity})`
   }
 
   // reset style after drag ends
