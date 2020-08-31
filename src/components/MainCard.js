@@ -16,6 +16,7 @@ import {
 import { makeStyles } from '@material-ui/core/styles';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
+import SaveIcon from '@material-ui/icons/Save';
 
 import EditCard from './EditCard';
 import ViewCard from './ViewCard';
@@ -105,7 +106,7 @@ const MainCard = ({ task, index, columns, edit }) => {
     };
 
     edit(id, task)
-    setClickedSave((prev) => !prev);
+    setClickedEdit((prev) => !prev);
   }
 
   // function DeleteTask() {
@@ -150,15 +151,26 @@ const MainCard = ({ task, index, columns, edit }) => {
                   /> 
                 }
                 <div>
-                  <IconButton
-                    aria-label="edit"
-                    className={classes.margin}
-                    alt="Edit"
-                    onClick={handleChangeEdit}
-                  >
-                    <EditIcon fontSize="small" />
-                  </IconButton>
-                  <IconButton aria-label="delete" className={classes.margin} onClick={handleChangeEdit}>
+                  { !clickedEdit &&
+                    <IconButton
+                      aria-label="edit"
+                      className={classes.margin}
+                      alt="Edit"
+                      onClick={handleChangeEdit}
+                    >
+                      <EditIcon fontSize="small" />
+                    </IconButton>
+                  }
+                  { clickedEdit && 
+                    <IconButton
+                      aria-label="save"
+                      className={classes.margin}
+                      onClick={ event => save(task.id) }
+                    >
+                      <SaveIcon fontSize="small" />
+                    </IconButton>
+                  }
+                  <IconButton aria-label="delete" className={classes.margin} onClick={handleChangeDelete}>
                     <DeleteIcon fontSize="small" />
                   </IconButton>
                   
@@ -192,5 +204,3 @@ const MainCard = ({ task, index, columns, edit }) => {
 }
 
 export default MainCard;
-
-
