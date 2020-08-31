@@ -155,9 +155,6 @@ const TaskCard = ({ task, index, edit }) => {
                       <MenuItem value="">
                         <em>None</em>
                       </MenuItem>
-                      <MenuItem value={10}>To Do</MenuItem>
-                      <MenuItem value={20}>In Progress</MenuItem>
-                      <MenuItem value={30}>Completed</MenuItem>
                     </Select>
                   </FormControl>
                 </div>

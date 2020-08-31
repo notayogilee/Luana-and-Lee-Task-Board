@@ -17,10 +17,10 @@ function App() {
   function updateTask(taskId, task) {
     console.log(taskId, task, "updateTask")
     setData(prevState => {
-      console.log(prevState, 'lalala')
+      // console.log(prevState, 'lalala')
       let tasks = Object.assign({}, prevState.tasks);
       tasks[taskId] = task;
-      console.log(tasks, 'before returning')
+      // console.log(tasks, 'before returning')
       return { ...prevState, tasks };
     })
   }

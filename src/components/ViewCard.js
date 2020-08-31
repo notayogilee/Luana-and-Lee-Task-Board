@@ -159,10 +159,10 @@ const ViewCard = ({ task, index, columns, edit }) => {
                         <MenuItem value="">
                           <em>None</em>
                         </MenuItem>
-                        {/* {Object.values(columns).map((column) => {
+                        {Object.values(columns).map((column) => {
                             return <MenuItem value={column.id} key={column.id}>{column.title}</MenuItem>
                           })
-                        } */}
+                        }
                         {/* <MenuItem value={column.id}>{column.title}</MenuItem>
                         <MenuItem value={20}>In Progress</MenuItem>
                         <MenuItem value={30}>Completed</MenuItem> */}
