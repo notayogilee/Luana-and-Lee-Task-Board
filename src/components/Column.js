@@ -3,14 +3,14 @@ import styled from 'styled-components';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 import Task from '../components/Task';
 import TaskCard from '../components/TaskCard';
-import initialData from '../initial-data';
 
 const Container = styled.div`
+align-items: center;
 margin: 8px;
 border: 1px solid lightgrey;
 background-color: white;
 border-radius: 2px;
-width: 220px;
+width: 100%;
 
 display: flex;
 flex-direction: column;
@@ -27,58 +27,20 @@ min-height: 100px;
 
 // Need min-height to be able to drag and drop onto empty column
 
-const Column = ({ column, tasks, index }) => {
+const Column = ({ column, tasks, index, state, createNewTask, onDragEnd }) => {
 
-  const [data, setData] = useState(initialData);
   const [newTask, setNewTask] = useState('');
   const [addTask, setAddTask] = useState(false);
-  const [tasksState, setTasksState] = useState(tasks);
-  const [columnState, setColumnState] = useState(column);
 
-  const createNewTask = (newTask) => {
+  const [edit, setEdit] = useState(false);
+  const [taskId, setTaskId] = useState(0);
 
-    const newId = `task-${Array.from(tasksState).length + 1}`;
-
-    // Tasks
-    const newTasks = [
-      ...tasksState,
-      {
-        id: newId,
-        content: newTask
-      }
-    ]
-    setTasksState(newTasks);
-
-    const start = column.taskIds.length;
-
-    column.taskIds.splice(start, 0, newId);
-
-    const newColumnState = {
-      ...columnState
-    }
-
-    setColumnState(newColumnState);
-
-    const newData = {
-      ...data,
-      tasks: newTasks,
-      columns: newColumnState
-    }
-
-    setData(newData);
-  };
-
-  const onChange = (e) => {
-    let value = e.target.value;
-    return setNewTask(value);
+  const enableEdit = id => {
+    setEdit(true);
+    setTaskId(id);
   }
 
-  const onSubmit = (e) => {
-    e.preventDefault();
-    createNewTask(newTask);
-    setAddTask(false);
-  }
-
+  console.log('tasks', tasks, 'column', column, 'columns', state.columns)
 
   return (
 
@@ -100,17 +62,23 @@ const Column = ({ column, tasks, index }) => {
                 {...provided.droppableProps}
                 isDraggingOver={snapshot.isDraggingOver}
               >
-                {Object.values(tasksState).map((task, index) =>
-                  <Task key={task.id} task={task} index={index} />
-                )}
                 {tasks.map((task, index) =>
-                  <TaskCard key={task.id} task={task} index={index} />
+
+                  edit && taskId === task.id ? <TaskCard key={task.id} task={task} index={index} onDragEnd={onDragEnd} /> :
+                    <Task key={task.id} task={task} enableEdit={enableEdit} index={index} />
+
                 )}
+
                 {provided.placeholder}
 
                 {addTask &&
-                  <form onSubmit={onSubmit} >
-                    <input type="text" name="newTask" onChange={onChange} />
+                  <form onSubmit={e => {
+                    e.preventDefault();
+                    createNewTask(newTask, column.id);
+                    setAddTask(false);
+                    setNewTask('');
+                  }} >
+                    <input type="text" name="newTask" onChange={e => setNewTask(e.target.value)} />
                     <button>OK</button>
                   </form>
                 }

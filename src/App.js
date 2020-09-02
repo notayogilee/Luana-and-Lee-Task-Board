@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
-import initialData from './initial-data';
+// import initialData from './initial-data';
+import useColumnData from './hooks/useColumnData';
 import Column from './components/Column';
 
 const Container = styled.div`
@@ -10,111 +11,20 @@ display: flex;
 
 
 function App() {
+  const { state, createNewTask, onDragStart, onDragUpdate, onDragEnd } = useColumnData();
 
-  const [data, setData] = useState(initialData);
-  const { columnOrder, columns, tasks } = data;
+  const { tasks, columns, columnOrder } = state;
 
-  console.log('data', data, 'columns', columns, 'tasks', tasks)
+  // const [data, setData] = useState(initialData);
+  // const { columnOrder, columns, tasks } = data;
+  // const { id, tasksIds, title } = columns;
 
-  // Add style to drags
+  // const [data, setData] = useState(initialData);
 
-  const onDragStart = () => {
-    document.body.style.color = 'orange';
-  }
-
-  const onDragUpdate = update => {
-    // change background color moving down or up column
-    const { destination } = update;
-  }
-
-  // reset style after drag ends
-  const onDragEnd = result => {
-    document.body.style.color = 'inherit';
-    // document.body.style.backgroundColor = 'inherit';
-
-
-    const { destination, source, draggableId, type } = result;
-
-    // Moving tasks within same column
-
-    if (!destination) { return; }
-
-    if (
-      destination.droppableId === source.droppableId &&
-      destination.index === source.index
-    ) {
-      return;
-    }
-
-    // to tell if re-ordering task or column
-    if (type === 'column') {
-      const newColumnOrder = Array.from(columnOrder);
-      newColumnOrder.splice(source.index, 1);
-      newColumnOrder.splice(destination.index, 0, draggableId);
-
-      const newData = {
-        ...data,
-        columnOrder: newColumnOrder
-      };
-
-      setData(newData);
-      return;
-    }
-
-    const start = columns[source.droppableId];
-    const finish = columns[destination.droppableId];
-
-    if (start === finish) {
-      const newTaskIds = Array.from(start.taskIds);
-      newTaskIds.splice(source.index, 1);
-      newTaskIds.splice(destination.index, 0, draggableId);
-
-      const newColumn = {
-        ...start,
-        taskIds: newTaskIds
-      };
-
-      const newData = {
-        ...data,
-        columns: {
-          ...columns,
-
-          [newColumn.id]: newColumn
-        }
-      }
-      setData(newData);
-      return;
-    }
-
-    // Moving from one list to another
-
-    const startTaskIds = Array.from(start.taskIds);
-    startTaskIds.splice(source.index, 1);
-
-    const newStart = {
-      ...start,
-      taskIds: startTaskIds,
-    };
-
-    const finishedTaskIds = Array.from(finish.taskIds);
-    finishedTaskIds.splice(destination.index, 0, draggableId);
-
-    const newFinish = {
-      ...finish,
-      taskIds: finishedTaskIds
-    };
-
-    const newData = {
-      ...data,
-      columns: {
-        ...columns,
-        [newStart.id]: newStart,
-        [newFinish.id]: newFinish
-      }
-    };
-    setData(newData);
-    return;
-  };
+  const [newTask, setNewTask] = useState('');
+  const [addTask, setAddTask] = useState(false);
+  // const [tasksState, setTasksState] = useState(tasks);
+  // const [columnState, setColumnState] = useState(columns[id]);
 
   return (
     <DragDropContext
@@ -133,7 +43,7 @@ function App() {
               const column = columns[columnId];
               const columnTasks = column.taskIds.map(taskId => tasks[taskId]);
 
-              return <Column key={column.id} column={column} tasks={columnTasks} index={index} />;
+              return <Column key={column.id} onDragEnd={onDragEnd} createNewTask={createNewTask} column={column} tasks={columnTasks} state={state} index={index} />;
             })}
             {provided.placeholder}
           </Container>

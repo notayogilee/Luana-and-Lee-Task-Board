@@ -1,0 +1,9 @@
+.buttons {
+  display: flex;
+}
+
+.transparent {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}

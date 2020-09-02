@@ -1,26 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Draggable } from 'react-beautiful-dnd';
+import './Task.css';
 
 const Container = styled.div`
+display: flex;
+justify-content: space-between; 
 border: 1px solid lightgrey;
 padding: 8px;
 margin-bottom: 8px;
 border-radius: 2px;
 background-color: ${props => (props.isDragging ? 'lightgreen' : 'white')};
 `;
-// Drag handle if you only want to grab a small part (handle) to drag
-// Need to remove dragHandleProps for this to work
 
-// const Handle = styled.div`
-// width: 20px;
-// height: 20px;
-// background-color: orange;
-// border-radius: 4px;
-// margin-right: 8px;
-// `;
+const Task = ({ task, index, enableEdit }) => {
 
-const Task = ({ task, index }) => {
   return (
     <Draggable draggableId={task.id} index={index}>
       {(provided, snapshot) => (
@@ -30,8 +24,20 @@ const Task = ({ task, index }) => {
           ref={provided.innerRef}
           isDragging={snapshot.isDragging}
         >
-          {/* <Handle {...provided.dragHandleProps} /> */}
-          {task.content}
+          <div className="title">
+            {task.title}
+          </div>
+          <div className="content">
+            {task.content}
+          </div>
+          <div className="buttons">
+            <button className="transparent" onClick={() => enableEdit(task.id)}>
+              <i className="fas fa-pen"></i>
+            </button>
+            <button className="transparent">
+              <i className="fas fa-trash"></i>
+            </button>
+          </div>
         </Container>
       )}
     </Draggable>
