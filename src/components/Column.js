@@ -27,7 +27,7 @@ min-height: 100px;
 
 // Need min-height to be able to drag and drop onto empty column
 
-const Column = ({ column, tasks, index, state, createNewTask, onDragEnd }) => {
+const Column = ({ column, tasks, index, state, createNewTask, deleteTask, onDragEnd }) => {
 
   const [newTask, setNewTask] = useState('');
   const [addTask, setAddTask] = useState(false);
@@ -38,7 +38,7 @@ const Column = ({ column, tasks, index, state, createNewTask, onDragEnd }) => {
   const enableEdit = id => {
     setEdit(true);
     setTaskId(id);
-  }
+  };
 
   return (
 
@@ -64,7 +64,7 @@ const Column = ({ column, tasks, index, state, createNewTask, onDragEnd }) => {
                   {tasks.map((task, index) =>
 
                     edit && taskId === task.id ? <TaskCard key={task.id} task={task} index={index} onDragEnd={onDragEnd} /> :
-                      <Task key={task.id} task={task} enableEdit={enableEdit} index={index} />
+                      <Task key={task.id} task={task} column={column} enableEdit={enableEdit} deleteTask={deleteTask} index={index} />
 
                   )}
 

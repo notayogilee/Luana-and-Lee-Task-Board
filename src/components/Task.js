@@ -13,7 +13,7 @@ border-radius: 2px;
 background-color: ${props => (props.isDragging ? 'lightgreen' : 'white')};
 `;
 
-const Task = ({ task, index, enableEdit }) => {
+const Task = ({ column, task, index, enableEdit, deleteTask }) => {
 
   return (
     <Draggable draggableId={task.id} index={index}>
@@ -34,7 +34,7 @@ const Task = ({ task, index, enableEdit }) => {
             <button className="transparent" onClick={() => enableEdit(task.id)}>
               <i className="fas fa-pen"></i>
             </button>
-            <button className="transparent">
+            <button className="transparent" onClick={() => deleteTask(task.id, column.id)}>
               <i className="fas fa-trash"></i>
             </button>
           </div>

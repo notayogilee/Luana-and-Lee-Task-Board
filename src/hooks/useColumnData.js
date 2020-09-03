@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
 export default function useColumnData() {
 
@@ -30,6 +31,8 @@ export default function useColumnData() {
   });
 
   const { tasks, columns, columnOrder } = state;
+
+  console.log('cols', columns, 'tasks', tasks)
 
   const onDragStart = () => {
     document.body.style.color = 'orange';
@@ -131,7 +134,7 @@ export default function useColumnData() {
 
   const createNewTask = (newTask, columnId) => {
 
-    const newId = `task-${Object.values(tasks).length + 1}`;
+    const newId = uuidv4();
 
     const start = columns[columnId].taskIds.length;
 
@@ -144,7 +147,7 @@ export default function useColumnData() {
         content: newTask
       }
     }
-    console.log(newTasks)
+
     const newColumnState = {
       ...columns
     }
@@ -158,6 +161,32 @@ export default function useColumnData() {
     setState(newState);
   };
 
+  const deleteTask = (taskId, columnId) => {
+    // remove from tasks
+    delete tasks[taskId];
+
+    // remove from columns.taskIds
+    const taskIdsIndex = columns[columnId].taskIds.indexOf(taskId);
+
+    columns[columnId].taskIds.splice(taskIdsIndex, 1);
+
+    // setStates to tasks
+    const newTasks = { ...tasks };
+
+    // setState to columns.taskIds,
+    const newColumns = { ...columns };
+
+
+    // setState to state with newTasks and newColumns
+    const newState = {
+      tasks: newTasks,
+      columns: newColumns,
+      columnOrder: [...columnOrder]
+    }
+
+    setState(newState);
+  }
+
   const createNewColumn = () => {
     // add column to columns
 
@@ -169,5 +198,6 @@ export default function useColumnData() {
 
   }
 
-  return { state, createNewTask, onDragEnd, onDragStart, onDragUpdate };
+
+  return { state, createNewTask, deleteTask, onDragEnd, onDragStart, onDragUpdate };
 }
