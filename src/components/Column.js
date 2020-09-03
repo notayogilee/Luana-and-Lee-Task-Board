@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import styled from 'styled-components';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 import Task from '../components/Task';
@@ -40,58 +40,62 @@ const Column = ({ column, tasks, index, state, createNewTask, onDragEnd }) => {
     setTaskId(id);
   }
 
-  console.log('tasks', tasks, 'column', column, 'columns', state.columns)
-
   return (
 
     <Draggable draggableId={column.id} index={index}>
       {provided => (
-        <Container
-          {...provided.draggableProps}
-          ref={provided.innerRef}
-        >
-          <Title
-            {...provided.dragHandleProps}
+        <Fragment>
+          <Container
+            {...provided.draggableProps}
+            ref={provided.innerRef}
           >
-            {column.title}</Title>
-          <Droppable droppableId={column.id} type="task">
-            {(provided, snapshot) => (
+            <Title
+              {...provided.dragHandleProps}
+            >
+              {column.title}</Title>
+            <Droppable droppableId={column.id} type="task">
+              {(provided, snapshot) => (
 
-              <TaskList
-                ref={provided.innerRef}
-                {...provided.droppableProps}
-                isDraggingOver={snapshot.isDraggingOver}
-              >
-                {tasks.map((task, index) =>
+                <TaskList
+                  ref={provided.innerRef}
+                  {...provided.droppableProps}
+                  isDraggingOver={snapshot.isDraggingOver}
+                >
+                  {tasks.map((task, index) =>
 
-                  edit && taskId === task.id ? <TaskCard key={task.id} task={task} index={index} onDragEnd={onDragEnd} /> :
-                    <Task key={task.id} task={task} enableEdit={enableEdit} index={index} />
+                    edit && taskId === task.id ? <TaskCard key={task.id} task={task} index={index} onDragEnd={onDragEnd} /> :
+                      <Task key={task.id} task={task} enableEdit={enableEdit} index={index} />
 
-                )}
+                  )}
 
-                {provided.placeholder}
+                  {provided.placeholder}
 
-                {addTask &&
-                  <form onSubmit={e => {
-                    e.preventDefault();
-                    createNewTask(newTask, column.id);
-                    setAddTask(false);
-                    setNewTask('');
-                  }} >
-                    <input type="text" name="newTask" onChange={e => setNewTask(e.target.value)} />
-                    <button>OK</button>
-                  </form>
-                }
+                  {addTask &&
+                    <form onSubmit={e => {
+                      e.preventDefault();
+                      createNewTask(newTask, column.id);
+                      setAddTask(false);
+                      setNewTask('');
+                    }} >
+                      <input type="text" name="newTask" onChange={e => setNewTask(e.target.value)} />
+                      <button>OK</button>
+                    </form>
+                  }
 
-              </TaskList>
-            )}
-          </Droppable>
+                </TaskList>
+              )}
+            </Droppable>
 
-          <button onClick={(() => {
-            setAddTask(true);
-          })}>Add Task</button>
+            <button onClick={(() => {
+              setAddTask(true);
+            })}>Add Task</button>
 
-        </Container>
+          </Container>
+          {column.id === (state.columnOrder[state.columnOrder.length - 1]) &&
+
+            <button>Add New Column</button>
+          }
+        </Fragment>
       )
       }
     </Draggable>

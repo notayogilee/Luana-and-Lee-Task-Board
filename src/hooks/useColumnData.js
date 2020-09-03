@@ -135,11 +135,8 @@ export default function useColumnData() {
 
     const start = columns[columnId].taskIds.length;
 
-    console.log(' start', start, 'newId', newId)
-
     columns[columnId].taskIds.splice(start, 0, newId);
 
-    console.log(columns)
     const newTasks = {
       ...tasks,
       [newId]: {
@@ -152,22 +149,25 @@ export default function useColumnData() {
       ...columns
     }
 
-
-
-    console.log("NCS", newColumnState)
-
-    // setColumnState(newColumnState);
-
     const newState = {
       tasks: newTasks,
       columns: newColumnState,
       columnOrder: [...columnOrder]
     }
 
-    console.log(newState)
-
     setState(newState);
   };
+
+  const createNewColumn = () => {
+    // add column to columns
+
+    // add column to columnOrder
+
+    //setStates to columns and columnOrder
+
+    //setState to state
+
+  }
 
   return { state, createNewTask, onDragEnd, onDragStart, onDragUpdate };
 }
