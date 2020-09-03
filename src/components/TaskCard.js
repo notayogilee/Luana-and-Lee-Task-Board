@@ -93,11 +93,7 @@ const TaskCard = ({ task, index, onDragEnd }) => {
 
           <form noValidate autoComplete="off">
             <Card className={classes.root}>
-<<<<<<< HEAD
               <Input placeholder={task.title} inputProps={{ 'aria-label': 'description' }} style={{ width: "100%", marginBottom: "5%" }} />
-=======
-              <Input placeholder="Title" inputProps={{ 'aria-label': 'description' }} style={{ width: "100%", marginBottom: "5%" }} />
->>>>>>> master
               <TextField
                 id="filled-multiline-static"
                 placeholder={task.content}
