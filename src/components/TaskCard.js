@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import { Draggable } from 'react-beautiful-dnd';
 import {
-  Typography,
   TextField,
   Card,
   Input,
@@ -10,7 +9,6 @@ import {
   FormControl,
   InputLabel,
   Select,
-  Button,
   MenuItem,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
@@ -95,7 +93,11 @@ const TaskCard = ({ task, index, onDragEnd }) => {
 
           <form noValidate autoComplete="off">
             <Card className={classes.root}>
+<<<<<<< HEAD
               <Input placeholder={task.title} inputProps={{ 'aria-label': 'description' }} style={{ width: "100%", marginBottom: "5%" }} />
+=======
+              <Input placeholder="Title" inputProps={{ 'aria-label': 'description' }} style={{ width: "100%", marginBottom: "5%" }} />
+>>>>>>> master
               <TextField
                 id="filled-multiline-static"
                 placeholder={task.content}
