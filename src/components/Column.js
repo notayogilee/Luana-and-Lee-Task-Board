@@ -3,8 +3,10 @@ import styled from 'styled-components';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 import Task from '../components/Task';
 import TaskCard from '../components/TaskCard';
+import './Column.css';
 
 const Container = styled.div`
+postion: relative;
 align-items: center;
 margin: 8px;
 border: 1px solid lightgrey;
@@ -27,12 +29,16 @@ min-height: 100px;
 
 // Need min-height to be able to drag and drop onto empty column
 
-const Column = ({ column, tasks, index, state, createNewTask, deleteTask, onDragEnd }) => {
+const Column = ({ column, tasks, index, state, createNewTask, deleteTask, createNewColumn, onDragEnd }) => {
 
   const [newTaskTitle, setNewTaskTitle] = useState('');
   const [newTaskContent, setNewTaskContent] = useState('');
 
   const [addTask, setAddTask] = useState(false);
+
+  const [newColumnTitle, setNewColumnTitle] = useState('');
+
+  const [addColumn, setAddColumn] = useState(false);
 
   const [edit, setEdit] = useState(false);
   const [taskId, setTaskId] = useState(0);
@@ -101,14 +107,37 @@ const Column = ({ column, tasks, index, state, createNewTask, deleteTask, onDrag
               )}
             </Droppable>
 
-            <button onClick={(() => {
-              setAddTask(true);
-            })}>Add Task</button>
+            <div className="newTask">
+              <button className="addTask" onClick={(() => {
+                setAddTask(true);
+              })}><i className="fas fa-plus-circle fa-lg"></i></button>
+            </div>
+
 
           </Container>
           {column.id === (state.columnOrder[state.columnOrder.length - 1]) &&
 
-            <button>Add New Column</button>
+            <Container>
+              {addColumn &&
+                <form onSubmit={e => {
+                  e.preventDefault();
+                  createNewColumn(newColumnTitle);
+                  setAddColumn(false);
+                  setNewColumnTitle('');
+                }
+                }>
+                  <input
+                    type="text"
+                    name="newColumnTitle"
+                    placeholder="Title"
+                    onChange={e => setNewColumnTitle(e.target.value)}
+                  />
+                  <button><i className="fas fa-check"></i></button>
+                  <button onClick={() => setAddColumn(false)}><i className="fas fa-times"></i></button>
+                </form>
+              }
+              <button className="addColumn" onClick={() => setAddColumn(true)}><i className="fas fa-plus-circle fa-3x"></i></button>
+            </Container>
           }
         </Fragment>
       )

@@ -1,0 +1,16 @@
+.addColumn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.addTask {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+
+  justify-content: space-between;
+  padding: 8px;
+  margin-bottom: 8px;
+  border-radius: 2px;
+}

@@ -133,7 +133,7 @@ export default function useColumnData() {
   };
 
   const createNewTask = (newTaskTitle, newTaskContent, columnId) => {
-    // console.log(newTask)
+
     const newId = uuidv4();
 
     const start = columns[columnId].taskIds.length;
@@ -177,7 +177,40 @@ export default function useColumnData() {
     setState(newState);
   }
 
-  const createNewColumn = () => {
+  const createNewColumn = (newColumnTitle) => {
+
+    const newId = uuidv4();
+
+    console.log('newID', newId)
+
+    // const start = columns[columnId].taskIds.length;
+
+    // columns[columnId].taskIds.splice(start, 0, newId);
+
+    const newColumns = {
+      ...columns,
+      [newId]: {
+        id: newId,
+        title: newColumnTitle,
+        taskIds: []
+      }
+    }
+
+    console.log('newCols', newColumns)
+
+    const startIndex = columnOrder.length;
+
+    columnOrder.splice(startIndex, 0, newId);
+
+    console.log('ColOrder', columnOrder)
+
+    const newState = {
+      tasks: { ...tasks },
+      columns: newColumns,
+      columnOrder: [...columnOrder]
+    }
+
+    setState(newState);
     // add column to columns
 
     // add column to columnOrder
@@ -189,5 +222,5 @@ export default function useColumnData() {
   }
 
 
-  return { state, createNewTask, deleteTask, onDragEnd, onDragStart, onDragUpdate };
+  return { state, createNewTask, deleteTask, createNewColumn, onDragEnd, onDragStart, onDragUpdate };
 }

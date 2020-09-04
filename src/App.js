@@ -10,7 +10,7 @@ display: flex;
 
 
 function App() {
-  const { state, createNewTask, deleteTask, onDragStart, onDragUpdate, onDragEnd } = useColumnData();
+  const { state, createNewTask, deleteTask, createNewColumn, onDragStart, onDragUpdate, onDragEnd } = useColumnData();
 
   const { tasks, columns, columnOrder } = state;
 
@@ -31,7 +31,7 @@ function App() {
               const column = columns[columnId];
               const columnTasks = column.taskIds.map(taskId => tasks[taskId]);
 
-              return <Column key={column.id} onDragEnd={onDragEnd} createNewTask={createNewTask} deleteTask={deleteTask} column={column} tasks={columnTasks} state={state} index={index} />;
+              return <Column key={column.id} onDragEnd={onDragEnd} createNewTask={createNewTask} deleteTask={deleteTask} createNewColumn={createNewColumn} column={column} tasks={columnTasks} state={state} index={index} />;
             })}
             {provided.placeholder}
           </Container>
