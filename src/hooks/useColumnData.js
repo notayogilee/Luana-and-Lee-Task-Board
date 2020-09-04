@@ -134,6 +134,16 @@ export default function useColumnData() {
 
   const createNewTask = (newTaskTitle, newTaskContent, columnId) => {
 
+    if (!newTaskTitle) {
+      alert('Please enter a Title');
+      return;
+    }
+
+    if (!newTaskContent) {
+      alert('Please enter some content');
+      return;
+    }
+
     const newId = uuidv4();
 
     const start = columns[columnId].taskIds.length;
@@ -178,6 +188,11 @@ export default function useColumnData() {
   }
 
   const createNewColumn = (newColumnTitle) => {
+
+    if (!newColumnTitle) {
+      alert('Please enter a Title');
+      return;
+    }
 
     const newId = uuidv4();
 

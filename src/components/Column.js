@@ -99,12 +99,14 @@ const Column = ({ column, tasks, index, state, createNewTask, deleteTask, create
                         name="newTaskTitle"
                         placeholder="Title"
                         onChange={e => setNewTaskTitle(e.target.value)}
+                        required
                       />
                       <input
                         type="text"
                         name="newTaskTitle"
                         placeholder="Description"
                         onChange={e => setNewTaskContent(e.target.value)}
+                        required
                       />
                       <button><i className="fas fa-check"></i></button>
                       <button onClick={() => setAddTask(false)}><i className="fas fa-times"></i></button>
@@ -139,6 +141,7 @@ const Column = ({ column, tasks, index, state, createNewTask, deleteTask, create
                     name="newColumnTitle"
                     placeholder="Title"
                     onChange={e => setNewColumnTitle(e.target.value)}
+                    required
                   />
                   <button><i className="fas fa-check"></i></button>
                   <button onClick={() => setAddColumn(false)}><i className="fas fa-times"></i></button>
@@ -150,7 +153,7 @@ const Column = ({ column, tasks, index, state, createNewTask, deleteTask, create
         </Fragment>
       )
       }
-    </Draggable >
+    </Draggable>
   )
 };
 
