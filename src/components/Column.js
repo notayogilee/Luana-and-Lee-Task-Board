@@ -29,7 +29,9 @@ min-height: 100px;
 
 const Column = ({ column, tasks, index, state, createNewTask, deleteTask, onDragEnd }) => {
 
-  const [newTask, setNewTask] = useState('');
+  const [newTaskTitle, setNewTaskTitle] = useState('');
+  const [newTaskContent, setNewTaskContent] = useState('');
+
   const [addTask, setAddTask] = useState(false);
 
   const [edit, setEdit] = useState(false);
@@ -73,12 +75,25 @@ const Column = ({ column, tasks, index, state, createNewTask, deleteTask, onDrag
                   {addTask &&
                     <form onSubmit={e => {
                       e.preventDefault();
-                      createNewTask(newTask, column.id);
+                      createNewTask(newTaskTitle, newTaskContent, column.id);
                       setAddTask(false);
-                      setNewTask('');
+                      setNewTaskTitle('');
+                      setNewTaskContent('');
                     }} >
-                      <input type="text" name="newTask" onChange={e => setNewTask(e.target.value)} />
-                      <button>OK</button>
+                      <input
+                        type="text"
+                        name="newTaskTitle"
+                        placeholder="Title"
+                        onChange={e => setNewTaskTitle(e.target.value)}
+                      />
+                      <input
+                        type="text"
+                        name="newTaskTitle"
+                        placeholder="Description"
+                        onChange={e => setNewTaskContent(e.target.value)}
+                      />
+                      <button><i className="fas fa-check"></i></button>
+                      <button onClick={() => setAddTask(false)}><i className="fas fa-times"></i></button>
                     </form>
                   }
 

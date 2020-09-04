@@ -32,7 +32,7 @@ export default function useColumnData() {
 
   const { tasks, columns, columnOrder } = state;
 
-  console.log('cols', columns, 'tasks', tasks)
+  // console.log('cols', columns, 'tasks', tasks)
 
   const onDragStart = () => {
     document.body.style.color = 'orange';
@@ -132,8 +132,8 @@ export default function useColumnData() {
     return;
   };
 
-  const createNewTask = (newTask, columnId) => {
-
+  const createNewTask = (newTaskTitle, newTaskContent, columnId) => {
+    // console.log(newTask)
     const newId = uuidv4();
 
     const start = columns[columnId].taskIds.length;
@@ -144,17 +144,14 @@ export default function useColumnData() {
       ...tasks,
       [newId]: {
         id: newId,
-        content: newTask
+        title: newTaskTitle,
+        content: newTaskContent
       }
-    }
-
-    const newColumnState = {
-      ...columns
     }
 
     const newState = {
       tasks: newTasks,
-      columns: newColumnState,
+      columns: { ...columns },
       columnOrder: [...columnOrder]
     }
 
@@ -170,17 +167,10 @@ export default function useColumnData() {
 
     columns[columnId].taskIds.splice(taskIdsIndex, 1);
 
-    // setStates to tasks
-    const newTasks = { ...tasks };
-
-    // setState to columns.taskIds,
-    const newColumns = { ...columns };
-
-
     // setState to state with newTasks and newColumns
     const newState = {
-      tasks: newTasks,
-      columns: newColumns,
+      tasks: { ...tasks },
+      columns: { ...columns },
       columnOrder: [...columnOrder]
     }
 
