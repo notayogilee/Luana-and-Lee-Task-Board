@@ -29,7 +29,7 @@ min-height: 100px;
 
 // Need min-height to be able to drag and drop onto empty column
 
-const Column = ({ column, tasks, index, state, createNewTask, deleteTask, createNewColumn, onDragEnd }) => {
+const Column = ({ column, tasks, index, state, createNewTask, deleteTask, createNewColumn, deleteColumn, onDragEnd }) => {
 
   const [newTaskTitle, setNewTaskTitle] = useState('');
   const [newTaskContent, setNewTaskContent] = useState('');
@@ -60,7 +60,15 @@ const Column = ({ column, tasks, index, state, createNewTask, deleteTask, create
             <Title
               {...provided.dragHandleProps}
             >
-              {column.title}</Title>
+              {column.title}
+              {column.title !== 'To Do' && column.title !== 'In Progress' && column.title !== 'Done' &&
+                <button onClick={() => deleteColumn(column.id)} className="deleteColumn">
+                  <i className="fas fa-times fa-lg"></i>
+                </button>
+
+              }
+            </Title>
+
             <Droppable droppableId={column.id} type="task">
               {(provided, snapshot) => (
 
@@ -110,7 +118,7 @@ const Column = ({ column, tasks, index, state, createNewTask, deleteTask, create
             <div className="newTask">
               <button className="addTask" onClick={(() => {
                 setAddTask(true);
-              })}><i className="fas fa-plus-circle fa-lg"></i></button>
+              })}><i className="fas fa-plus-circle fa-2x"></i></button>
             </div>
 
 
@@ -142,7 +150,7 @@ const Column = ({ column, tasks, index, state, createNewTask, deleteTask, create
         </Fragment>
       )
       }
-    </Draggable>
+    </Draggable >
   )
 };
 

@@ -1,14 +1,19 @@
-.addColumn {
-  background: transparent;
-  border: none;
-  cursor: pointer;
-}
-
+.addColumn,
 .addTask {
   background: transparent;
   border: none;
   cursor: pointer;
+  justify-content: space-between;
+  padding: 8px;
+  margin-bottom: 8px;
+  border-radius: 2px;
+}
 
+.deleteColumn {
+  color: red;
+  background: transparent;
+  border: none;
+  cursor: pointer;
   justify-content: space-between;
   padding: 8px;
   margin-bottom: 8px;

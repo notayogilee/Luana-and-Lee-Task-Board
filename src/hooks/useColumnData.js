@@ -13,7 +13,7 @@ export default function useColumnData() {
     columns: {
       'column-1': {
         id: 'column-1',
-        title: "To do",
+        title: "To Do",
         taskIds: ['task-1', 'task-2', 'task-3', 'task-4']
       },
       'column-2': {
@@ -181,12 +181,6 @@ export default function useColumnData() {
 
     const newId = uuidv4();
 
-    console.log('newID', newId)
-
-    // const start = columns[columnId].taskIds.length;
-
-    // columns[columnId].taskIds.splice(start, 0, newId);
-
     const newColumns = {
       ...columns,
       [newId]: {
@@ -196,13 +190,9 @@ export default function useColumnData() {
       }
     }
 
-    console.log('newCols', newColumns)
-
     const startIndex = columnOrder.length;
 
     columnOrder.splice(startIndex, 0, newId);
-
-    console.log('ColOrder', columnOrder)
 
     const newState = {
       tasks: { ...tasks },
@@ -211,16 +201,34 @@ export default function useColumnData() {
     }
 
     setState(newState);
-    // add column to columns
+  }
 
-    // add column to columnOrder
+  const deleteColumn = (columnId) => {
 
-    //setStates to columns and columnOrder
+    // remove from columnOrder,
+    const newColumnOrder = columnOrder.filter(id => id !== columnId);
 
-    //setState to state
+    // remove from columns
+    // 1) check taskIds.length
+    if (columns[columnId].taskIds.length > 0) {
+      // 3) if full ask to move before delete (alert?)
+      if (!window.confirm("Do you want to delete all tasks in this column?")) {
+        return;
+      }
+
+      // alert(deleteTasksWithColumn);
+    } else {
+      // 2) if empty => delete
+      delete columns[columnId];
+    }
+
+    setState({
+      tasks: { ...tasks },
+      columns: { ...columns },
+      columnOrder: newColumnOrder
+    })
 
   }
 
-
-  return { state, createNewTask, deleteTask, createNewColumn, onDragEnd, onDragStart, onDragUpdate };
+  return { state, createNewTask, deleteTask, createNewColumn, deleteColumn, onDragEnd, onDragStart, onDragUpdate };
 }
