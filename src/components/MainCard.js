@@ -67,7 +67,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const MainCard = ({ task, index, columns, edit }) => {
+const MainCard = ({ task, index, columns, column, editTask, deleteTask }) => {
   const classes = useStyles();
   const [clickedEdit, setClickedEdit] = React.useState(false);
   const [clickedDelete, setClickedDelete] = React.useState(false);
@@ -105,7 +105,7 @@ const MainCard = ({ task, index, columns, edit }) => {
       content,
     };
 
-    edit(id, task)
+    editTask(id, task)
     setClickedEdit((prev) => !prev);
   }
 
@@ -170,7 +170,7 @@ const MainCard = ({ task, index, columns, edit }) => {
                       <SaveIcon fontSize="small" />
                     </IconButton>
                   }
-                  <IconButton aria-label="delete" className={classes.margin} onClick={handleChangeDelete}>
+                  <IconButton aria-label="delete" className={classes.margin} onClick={() => deleteTask(task.id, column.id)}>
                     <DeleteIcon fontSize="small" />
                   </IconButton>
                   
