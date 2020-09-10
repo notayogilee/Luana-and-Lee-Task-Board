@@ -13,7 +13,7 @@ function App() {
   const { state, createNewTask, deleteTask, createNewColumn, deleteColumn, onDragStart, onDragUpdate, onDragEnd, updateTask } = useColumnData();
 
   const { tasks, columns, columnOrder } = state;
-  
+
 
   // const [data, setData] = useState(initialData);
   // const { columnOrder, columns, tasks } = data;
@@ -47,7 +47,7 @@ function App() {
               const column = columns[columnId];
               const columnTasks = column.taskIds.map(taskId => tasks[taskId]);
 
-              return <Column key={column.id} onDragEnd={onDragEnd} createNewTask={createNewTask} deleteTask={deleteTask} createNewColumn={createNewColumn} deleteColumn={deleteColumn} column={column} tasks={columnTasks} state={state} index={index} columns={columns} updateTask={updateTask} />;
+              return <Column key={column.id} onDragEnd={onDragEnd} createNewTask={createNewTask} deleteTask={deleteTask} createNewColumn={createNewColumn} deleteColumn={deleteColumn} column={column} tasks={columnTasks} columnOrder={columnOrder} state={state} index={index} columns={columns} updateTask={updateTask} />;
             })}
 
             {provided.placeholder}

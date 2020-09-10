@@ -30,7 +30,9 @@ min-height: 100px;
 
 // Need min-height to be able to drag and drop onto empty column
 
-const Column = ({ column, columns, tasks, index, state, createNewTask, deleteTask, createNewColumn, deleteColumn, onDragEnd, updateTask }) => {
+const Column = ({ column, index, tasks, columns, columnOrder, createNewTask, deleteTask, createNewColumn, deleteColumn, onDragEnd, updateTask }) => {
+
+  // const { tasks, columns, columnOrder } = state;
 
   const [newTaskTitle, setNewTaskTitle] = useState('');
   const [newTaskContent, setNewTaskContent] = useState('');
@@ -85,7 +87,7 @@ const Column = ({ column, columns, tasks, index, state, createNewTask, deleteTas
                   isDraggingOver={snapshot.isDraggingOver}
                 >
                   {tasks.map((task, index) =>
-                    <MainCard key={task.id} task={task} column={column} editTask={editTask} deleteTask={deleteTask} index={index} onDragEnd={onDragEnd} columns={columns} />
+                    <MainCard key={task.id} task={task} column={column} columnOrder={columnOrder} editTask={editTask} deleteTask={deleteTask} index={index} onDragEnd={onDragEnd} columns={columns} />
                   )}
 
                   {provided.placeholder}
@@ -129,7 +131,7 @@ const Column = ({ column, columns, tasks, index, state, createNewTask, deleteTas
 
 
           </Container>
-          {column.id === (state.columnOrder[state.columnOrder.length - 1]) &&
+          {column.id === (columnOrder[columnOrder.length - 1]) &&
 
             <Container>
               {addColumn &&

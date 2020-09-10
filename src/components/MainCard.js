@@ -67,7 +67,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const MainCard = ({ task, index, columns, column, editTask, deleteTask }) => {
+const MainCard = ({ task, index, columns, columnOrder, column, editTask, deleteTask }) => {
   const classes = useStyles();
   const [clickedEdit, setClickedEdit] = React.useState(false);
   const [clickedDelete, setClickedDelete] = React.useState(false);
@@ -134,24 +134,24 @@ const MainCard = ({ task, index, columns, column, editTask, deleteTask }) => {
 
             <form noValidate autoComplete="off" onSubmit={event => event.preventDefault()}>
               <Card className={classes.root}>
-                { !clickedEdit &&
+                {!clickedEdit &&
                   <ViewCard
                     key={task.id}
                     task={task}
                     index={index}
-                  /> 
+                  />
                 }
-                { clickedEdit &&
+                {clickedEdit &&
                   <EditCard
                     key={task.id}
                     task={task}
                     index={index}
                     onSetTitle={setTitle}
                     onSetContent={setContent}
-                  /> 
+                  />
                 }
                 <div>
-                  { !clickedEdit &&
+                  {!clickedEdit &&
                     <IconButton
                       aria-label="edit"
                       className={classes.margin}
@@ -161,11 +161,11 @@ const MainCard = ({ task, index, columns, column, editTask, deleteTask }) => {
                       <EditIcon fontSize="small" />
                     </IconButton>
                   }
-                  { clickedEdit && 
+                  {clickedEdit &&
                     <IconButton
                       aria-label="save"
                       className={classes.margin}
-                      onClick={ event => save(task.id) }
+                      onClick={event => save(task.id)}
                     >
                       <SaveIcon fontSize="small" />
                     </IconButton>
@@ -173,7 +173,7 @@ const MainCard = ({ task, index, columns, column, editTask, deleteTask }) => {
                   <IconButton aria-label="delete" className={classes.margin} onClick={() => deleteTask(task.id, column.id)}>
                     <DeleteIcon fontSize="small" />
                   </IconButton>
-                  
+
                   <FormControl variant="outlined" size="small" className={classes.formControl}>
                     <InputLabel htmlFor="outlined-age-native-simple">Move to...</InputLabel>
                     <Select
@@ -188,8 +188,8 @@ const MainCard = ({ task, index, columns, column, editTask, deleteTask }) => {
                         <em>None</em>
                       </MenuItem>
                       {Object.values(columns).map((column) => {
-                          return <MenuItem value={column.id} key={column.id}>{column.title}</MenuItem>
-                        })
+                        return <MenuItem value={column.id} key={column.id}>{column.title}</MenuItem>
+                      })
                       }
                     </Select>
                   </FormControl>
