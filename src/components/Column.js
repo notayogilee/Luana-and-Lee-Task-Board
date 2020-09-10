@@ -48,11 +48,11 @@ const Column = ({ column, tasks, index, state, createNewTask, deleteTask, create
     setEdit(true);
     setTaskId(id);
   };
-// const Column = ({ column, tasks, index, columns, updateTask }) => {
-//   function edit(taskId, task) {
-//     console.log(taskId, task, "edit",)
-//     updateTask(taskId, task)
-//   }
+  // const Column = ({ column, tasks, index, columns, updateTask }) => {
+  //   function edit(taskId, task) {
+  //     console.log(taskId, task, "edit",)
+  //     updateTask(taskId, task)
+  //   }
 
   return (
 
@@ -157,25 +157,25 @@ const Column = ({ column, tasks, index, state, createNewTask, deleteTask, create
             </Container>
           }
         </Fragment>
-          //   {column.title}</Title>
-          // <Droppable droppableId={column.id} type="task">
-          //   {(provided, snapshot) => (
+        //   {column.title}</Title>
+        // <Droppable droppableId={column.id} type="task">
+        //   {(provided, snapshot) => (
 
-          //     <TaskList
-          //       ref={provided.innerRef}
-          //       {...provided.droppableProps}
-          //       isDraggingOver={snapshot.isDraggingOver}
-          //     >
-          //       {/* {tasks.map((task, index) =>
-          //         <Task key={task.id} task={task} index={index} />
-          //       )} */}
-          //       {tasks.map((task, index) =>
-          //         <MainCard key={task.id} task={task} index={index} columns={columns} edit={edit} />
-          //       )}
-          //       {provided.placeholder}
-          //     </TaskList>
-          //   )}
-          // </Droppable>
+        //     <TaskList
+        //       ref={provided.innerRef}
+        //       {...provided.droppableProps}
+        //       isDraggingOver={snapshot.isDraggingOver}
+        //     >
+        //       {/* {tasks.map((task, index) =>
+        //         <Task key={task.id} task={task} index={index} />
+        //       )} */}
+        //       {tasks.map((task, index) =>
+        //         <MainCard key={task.id} task={task} index={index} columns={columns} edit={edit} />
+        //       )}
+        //       {provided.placeholder}
+        //     </TaskList>
+        //   )}
+        // </Droppable>
         // </Container>
       )
       }
