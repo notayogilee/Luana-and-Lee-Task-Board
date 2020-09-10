@@ -1,8 +1,8 @@
 import React, { Fragment, useState } from 'react';
 import styled from 'styled-components';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
-import Task from '../components/Task';
-import TaskCard from '../components/TaskCard';
+// import Task from '../components/Task';
+// import TaskCard from '../components/TaskCard';
 import './Column.css';
 import MainCard from '../components/MainCard';
 
@@ -30,7 +30,7 @@ min-height: 100px;
 
 // Need min-height to be able to drag and drop onto empty column
 
-const Column = ({ column, tasks, index, state, createNewTask, deleteTask, createNewColumn, deleteColumn, onDragEnd }) => {
+const Column = ({ column, columns, tasks, index, state, createNewTask, deleteTask, createNewColumn, deleteColumn, onDragEnd, updateTask }) => {
 
   const [newTaskTitle, setNewTaskTitle] = useState('');
   const [newTaskContent, setNewTaskContent] = useState('');
@@ -41,18 +41,19 @@ const Column = ({ column, tasks, index, state, createNewTask, deleteTask, create
 
   const [addColumn, setAddColumn] = useState(false);
 
-  const [edit, setEdit] = useState(false);
-  const [taskId, setTaskId] = useState(0);
+  // const [edit, setEdit] = useState(false);
+  // const [taskId, setTaskId] = useState(0);
 
-  const enableEdit = id => {
-    setEdit(true);
-    setTaskId(id);
-  };
-  // const Column = ({ column, tasks, index, columns, updateTask }) => {
-  //   function edit(taskId, task) {
-  //     console.log(taskId, task, "edit",)
-  //     updateTask(taskId, task)
-  //   }
+  // const enableEdit = id => {
+  //   setEdit(true);
+  //   setTaskId(id);
+  // };
+
+  function editTask(taskId, task) {
+    // console.log(taskId, task, "edit",)
+    updateTask(taskId, task)
+  }
+
 
   return (
 
@@ -84,10 +85,7 @@ const Column = ({ column, tasks, index, state, createNewTask, deleteTask, create
                   isDraggingOver={snapshot.isDraggingOver}
                 >
                   {tasks.map((task, index) =>
-
-                    edit && taskId === task.id ? <TaskCard key={task.id} task={task} index={index} onDragEnd={onDragEnd} /> :
-                      <Task key={task.id} task={task} column={column} enableEdit={enableEdit} deleteTask={deleteTask} index={index} />
-
+                    <MainCard key={task.id} task={task} column={column} editTask={editTask} deleteTask={deleteTask} index={index} onDragEnd={onDragEnd} columns={columns} />
                   )}
 
                   {provided.placeholder}
@@ -157,26 +155,6 @@ const Column = ({ column, tasks, index, state, createNewTask, deleteTask, create
             </Container>
           }
         </Fragment>
-        //   {column.title}</Title>
-        // <Droppable droppableId={column.id} type="task">
-        //   {(provided, snapshot) => (
-
-        //     <TaskList
-        //       ref={provided.innerRef}
-        //       {...provided.droppableProps}
-        //       isDraggingOver={snapshot.isDraggingOver}
-        //     >
-        //       {/* {tasks.map((task, index) =>
-        //         <Task key={task.id} task={task} index={index} />
-        //       )} */}
-        //       {tasks.map((task, index) =>
-        //         <MainCard key={task.id} task={task} index={index} columns={columns} edit={edit} />
-        //       )}
-        //       {provided.placeholder}
-        //     </TaskList>
-        //   )}
-        // </Droppable>
-        // </Container>
       )
       }
     </Draggable>

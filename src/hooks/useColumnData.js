@@ -187,6 +187,17 @@ export default function useColumnData() {
     setState(newState);
   }
 
+  function updateTask(taskId, task) {
+    //console.log(taskId, task, "updateTask")
+    setState(prevState => {
+      // console.log(prevState, 'lalala')
+      let tasks = Object.assign({}, prevState.tasks);
+      tasks[taskId] = task;
+      // console.log(tasks, 'before returning')
+      return { ...prevState, tasks };
+    })
+  }
+
   const createNewColumn = (newColumnTitle) => {
 
     if (!newColumnTitle) {
@@ -245,5 +256,5 @@ export default function useColumnData() {
 
   }
 
-  return { state, createNewTask, deleteTask, createNewColumn, deleteColumn, onDragEnd, onDragStart, onDragUpdate };
+  return { state, createNewTask, deleteTask, createNewColumn, deleteColumn, onDragEnd, onDragStart, onDragUpdate, updateTask };
 }
