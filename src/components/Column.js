@@ -30,7 +30,7 @@ min-height: 100px;
 
 // Need min-height to be able to drag and drop onto empty column
 
-const Column = ({ column, index, tasks, columns, columnOrder, createNewTask, deleteTask, createNewColumn, deleteColumn, onDragEnd, updateTask }) => {
+const Column = ({ column, index, tasks, columns, columnOrder, createNewTask, deleteTask, changeColumn, createNewColumn, deleteColumn, onDragEnd, updateTask }) => {
 
   // const { tasks, columns, columnOrder } = state;
 
@@ -87,7 +87,7 @@ const Column = ({ column, index, tasks, columns, columnOrder, createNewTask, del
                   isDraggingOver={snapshot.isDraggingOver}
                 >
                   {tasks.map((task, index) =>
-                    <MainCard key={task.id} task={task} column={column} columnOrder={columnOrder} editTask={editTask} deleteTask={deleteTask} index={index} onDragEnd={onDragEnd} columns={columns} />
+                    <MainCard key={task.id} task={task} column={column} columnOrder={columnOrder} editTask={editTask} deleteTask={deleteTask} changeColumn={changeColumn} index={index} onDragEnd={onDragEnd} columns={columns} />
                   )}
 
                   {provided.placeholder}

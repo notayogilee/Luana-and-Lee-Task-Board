@@ -159,13 +159,11 @@ export default function useColumnData() {
       }
     }
 
-    const newState = {
+    setState({
       tasks: newTasks,
       columns: { ...columns },
       columnOrder: [...columnOrder]
-    }
-
-    setState(newState);
+    });
   };
 
   const deleteTask = (taskId, columnId) => {
@@ -178,13 +176,12 @@ export default function useColumnData() {
     columns[columnId].taskIds.splice(taskIdsIndex, 1);
 
     // setState to state with newTasks and newColumns
-    const newState = {
+
+    setState({
       tasks: { ...tasks },
       columns: { ...columns },
       columnOrder: [...columnOrder]
-    }
-
-    setState(newState);
+    });
   }
 
   function updateTask(taskId, task) {
@@ -196,6 +193,21 @@ export default function useColumnData() {
       // console.log(tasks, 'before returning')
       return { ...prevState, tasks };
     })
+  }
+
+  const changeColumn = (taskId, startColumnId, endColumnId) => {
+    // splice out of start column
+    const taskIdsIndex = columns[startColumnId].taskIds.indexOf(taskId);
+
+    columns[startColumnId].taskIds.splice(taskIdsIndex, 1);
+    //splice into end column
+    columns[endColumnId].taskIds.splice(0, 0, taskId);
+
+    setState({
+      tasks: { ...tasks },
+      columns: { ...columns },
+      columnOrder: [...columnOrder]
+    });
   }
 
   const createNewColumn = (newColumnTitle) => {
@@ -241,8 +253,6 @@ export default function useColumnData() {
       if (!window.confirm("Do you want to delete all tasks in this column?")) {
         return;
       }
-
-      // alert(deleteTasksWithColumn);
     } else {
       // 2) if empty => delete
       delete columns[columnId];
@@ -253,8 +263,7 @@ export default function useColumnData() {
       columns: { ...columns },
       columnOrder: newColumnOrder
     })
-
   }
 
-  return { state, createNewTask, deleteTask, createNewColumn, deleteColumn, onDragEnd, onDragStart, onDragUpdate, updateTask };
+  return { state, createNewTask, deleteTask, changeColumn, createNewColumn, deleteColumn, onDragEnd, onDragStart, onDragUpdate, updateTask };
 }

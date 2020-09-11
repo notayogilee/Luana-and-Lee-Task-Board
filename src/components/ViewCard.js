@@ -13,14 +13,14 @@ const ViewCard = ({ task }) => {
         color="primary"
         gutterBottom="true"
         variant="h2"
-        style={{fontSize:"1em"}}
+        style={{ fontSize: "1em" }}
       >
         {task.title}
       </Typography>
       <Typography
         gutterBottom="true"
         variant="body1"
-        style={{fontSize:"0.8em", color:"grey"}}
+        style={{ fontSize: "0.8em", color: "grey" }}
       >
         {task.content}
       </Typography>

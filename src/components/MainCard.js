@@ -67,7 +67,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const MainCard = ({ task, index, columns, columnOrder, column, editTask, deleteTask }) => {
+const MainCard = ({ task, index, columns, columnOrder, column, editTask, deleteTask, changeColumn }) => {
   const classes = useStyles();
   const [clickedEdit, setClickedEdit] = React.useState(false);
   const [clickedDelete, setClickedDelete] = React.useState(false);
@@ -79,6 +79,8 @@ const MainCard = ({ task, index, columns, columnOrder, column, editTask, deleteT
 
   const handleChange = (event) => {
     setAge(event.target.value);
+    // changeColumn(task.id, column.id, age);
+    console.log(age);
   };
 
   const handleClose = () => {
@@ -182,13 +184,17 @@ const MainCard = ({ task, index, columns, columnOrder, column, editTask, deleteT
                       onClose={handleClose}
                       onOpen={handleOpen}
                       value={age}
-                      onChange={handleChange}
+                      onChange={(e) => {
+
+                        changeColumn(task.id, column.id, e.target.value)
+
+                      }}
                     >
                       <MenuItem value="">
                         <em>None</em>
                       </MenuItem>
-                      {Object.values(columns).map((column) => {
-                        return <MenuItem value={column.id} key={column.id}>{column.title}</MenuItem>
+                      {columnOrder.map((column) => {
+                        return <MenuItem value={columns[column].id} key={columns[column].id}>{columns[column].title}</MenuItem>
                       })
                       }
                     </Select>
