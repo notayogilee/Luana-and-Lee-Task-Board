@@ -5,12 +5,15 @@ import { Droppable, Draggable } from 'react-beautiful-dnd';
 // import TaskCard from '../components/TaskCard';
 import {
   Typography,
-  IconButton
+  IconButton,
+  Input,
 } from '@material-ui/core';
 import './Column.css';
 import MainCard from '../components/MainCard';
 
 import AddCircleIcon from '@material-ui/icons/AddCircle';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import CancelIcon from '@material-ui/icons/Cancel';
 
 const Container = styled.div`
 postion: relative;
@@ -155,23 +158,51 @@ const Column = ({ column, index, tasks, columns, columnOrder, createNewTask, del
 
             <Container>
               {addColumn &&
-                <form onSubmit={e => {
-                  e.preventDefault();
-                  createNewColumn(newColumnTitle);
-                  setAddColumn(false);
-                  setNewColumnTitle('');
-                }
-                }>
-                  <input
-                    type="text"
-                    name="newColumnTitle"
-                    placeholder="Title"
-                    onChange={e => setNewColumnTitle(e.target.value)}
-                    required
-                  />
-                  <button><i className="fas fa-check"></i></button>
-                  <button onClick={() => setAddColumn(false)}><i className="fas fa-times"></i></button>
-                </form>
+                <div style={{width: '100%', display: 'flex', flexDirection: 'row',
+                justifyContent: 'space-between', marginTop: '20px'}}>
+                  <form onSubmit={e => {
+                    e.preventDefault();
+                    createNewColumn(newColumnTitle);
+                    setAddColumn(false);
+                    setNewColumnTitle('');
+                  }
+                  }>
+                    {/* <input
+                      type="text"
+                      name="newColumnTitle"
+                      placeholder="Title"
+                      onChange={e => setNewColumnTitle(e.target.value)}
+                      required
+                    /> */}
+                    <Input
+                      type="text"
+                      name="newColumnTitle"
+                      placeholder="Title"
+                      onChange={e => setNewColumnTitle(e.target.value)}
+                      required
+                      style={{ width: "50%", margin: "10px"}}
+                      inputProps={{ 'name': 'newColumnTitle' }}
+                    />
+                    {/* <button><i className="fas fa-check"></i></button> */}
+                    <IconButton name="newColumnTitle">
+                      <CheckCircleIcon
+                        //color="primary"
+                        fontSize="small"
+                        style={{ color: "#8bc34a"}}
+                      />
+                    </IconButton>
+
+                    <IconButton>
+                      <CancelIcon
+                        //color="primary"
+                        fontSize="small"
+                        style={{ color: "#f44336"}}
+                        onClick={() => setAddColumn(false)}
+                      />
+                    </IconButton>
+                    {/* <button onClick={() => setAddColumn(false)}><i className="fas fa-times"></i></button> */}
+                  </form>
+                </div>
               }
 
               {!addColumn &&
