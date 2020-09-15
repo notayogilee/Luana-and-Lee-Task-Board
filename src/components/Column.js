@@ -5,9 +5,12 @@ import { Droppable, Draggable } from 'react-beautiful-dnd';
 // import TaskCard from '../components/TaskCard';
 import {
   Typography,
+  IconButton
 } from '@material-ui/core';
 import './Column.css';
 import MainCard from '../components/MainCard';
+
+import AddCircleIcon from '@material-ui/icons/AddCircle';
 
 const Container = styled.div`
 postion: relative;
@@ -131,9 +134,19 @@ const Column = ({ column, index, tasks, columns, columnOrder, createNewTask, del
             </Droppable>
 
             <div className="newTask">
-              <button className="addTask" onClick={(() => {
+              <IconButton
+                aria-label="addTask"
+                className="addTask"
+                onClick={(() => { setAddTask(true); })}
+              >
+                <AddCircleIcon
+                  color="primary"
+                  style={{ fontSize: "2em"}}
+                />
+              </IconButton>
+              {/* <button className="addTask" onClick={(() => {
                 setAddTask(true);
-              })}><i className="fas fa-plus-circle fa-2x"></i></button>
+              })}><i className="fas fa-plus-circle fa-2x"></i></button> */}
             </div>
 
 
@@ -160,7 +173,22 @@ const Column = ({ column, index, tasks, columns, columnOrder, createNewTask, del
                   <button onClick={() => setAddColumn(false)}><i className="fas fa-times"></i></button>
                 </form>
               }
-              <button className="addColumn" onClick={() => setAddColumn(true)}><i className="fas fa-plus-circle fa-3x"></i></button>
+
+              {!addColumn &&
+                <div style={{marginTop: '15px'}}>
+                  <IconButton
+                    aria-label="addColumn"
+                    className="addColumn"
+                    onClick={() => setAddColumn(true)}
+                  >
+                    <AddCircleIcon
+                      color="primary"
+                      style={{ fontSize: "2em"}}
+                    />
+                  </IconButton>
+                </div>
+              }
+              {/* <button className="addColumn" onClick={() => setAddColumn(true)}><i className="fas fa-plus-circle fa-3x"></i></button> */}
             </Container>
           }
         </Fragment>
