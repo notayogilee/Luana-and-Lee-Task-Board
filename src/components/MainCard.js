@@ -25,12 +25,18 @@ import ViewCard from './ViewCard';
 import 'fontsource-roboto';
 
 const Container = styled.div`
-border: 1px solid lightgrey;
 padding: 8px;
 margin-bottom: 8px;
 border-radius: 2px;
 background-color: ${props => (props.isDragging ? 'lightgreen' : 'white')};
 `;
+
+// const cardButtons = styled.div`
+//   display: flex;
+//   flex-direction: row;
+//   justify-content: space-between;
+//   background-color: blue;
+// `;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -65,6 +71,29 @@ const useStyles = makeStyles((theme) => ({
     display: 'block',
     marginTop: theme.spacing(2),
   },
+  cardButtons: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  cardIcons: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginRight: '50px',
+  },
+  divisorDiv: {
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+    marginTop: '20px',
+    marginBottom: '10px',
+  },
+  divisor: {
+    width: '96%',
+    height: '1px',
+    backgroundColor: '#3f51b580',
+  }
 }));
 
 const MainCard = ({ task, index, columns, columnOrder, column, editTask, deleteTask, changeColumn }) => {
@@ -152,29 +181,32 @@ const MainCard = ({ task, index, columns, columnOrder, column, editTask, deleteT
                     onSetContent={setContent}
                   />
                 }
-                <div>
-                  {!clickedEdit &&
-                    <IconButton
-                      aria-label="edit"
-                      className={classes.margin}
-                      alt="Edit"
-                      onClick={handleChangeEdit}
-                    >
-                      <EditIcon fontSize="small" />
+                <div className={classes.divisorDiv}><div className={classes.divisor}></div></div>
+                <div className={classes.cardButtons}>
+                  <div className={classes.cardIcons}>
+                    {!clickedEdit &&
+                      <IconButton
+                        aria-label="edit"
+                        className={classes.margin}
+                        alt="Edit"
+                        onClick={handleChangeEdit}
+                      >
+                        <EditIcon fontSize="small" />
+                      </IconButton>
+                    }
+                    {clickedEdit &&
+                      <IconButton
+                        aria-label="save"
+                        className={classes.margin}
+                        onClick={event => save(task.id)}
+                      >
+                        <SaveIcon fontSize="small" />
+                      </IconButton>
+                    }
+                    <IconButton aria-label="delete" className={classes.margin} onClick={() => deleteTask(task.id, column.id)}>
+                      <DeleteIcon fontSize="small" />
                     </IconButton>
-                  }
-                  {clickedEdit &&
-                    <IconButton
-                      aria-label="save"
-                      className={classes.margin}
-                      onClick={event => save(task.id)}
-                    >
-                      <SaveIcon fontSize="small" />
-                    </IconButton>
-                  }
-                  <IconButton aria-label="delete" className={classes.margin} onClick={() => deleteTask(task.id, column.id)}>
-                    <DeleteIcon fontSize="small" />
-                  </IconButton>
+                  </div>
 
                   <FormControl variant="outlined" size="small" className={classes.formControl}>
                     <InputLabel htmlFor="outlined-age-native-simple">Move to...</InputLabel>

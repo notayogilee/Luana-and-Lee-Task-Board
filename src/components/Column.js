@@ -3,6 +3,9 @@ import styled from 'styled-components';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 // import Task from '../components/Task';
 // import TaskCard from '../components/TaskCard';
+import {
+  Typography,
+} from '@material-ui/core';
 import './Column.css';
 import MainCard from '../components/MainCard';
 
@@ -66,7 +69,11 @@ const Column = ({ column, index, tasks, columns, columnOrder, createNewTask, del
             {...provided.draggableProps}
             ref={provided.innerRef}
           >
-            <Title
+            <Typography
+              color="primary"
+              gutterBottom="true"
+              variant="h2"
+              style={{ fontSize: "2em", marginTop: '30px', fontWeight: '700'}}
               {...provided.dragHandleProps}
             >
               {column.title}
@@ -76,7 +83,7 @@ const Column = ({ column, index, tasks, columns, columnOrder, createNewTask, del
                 </button>
 
               }
-            </Title>
+            </Typography>
 
             <Droppable droppableId={column.id} type="task">
               {(provided, snapshot) => (
