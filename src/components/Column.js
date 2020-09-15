@@ -7,6 +7,7 @@ import {
   Typography,
   IconButton,
   Input,
+  FormControl,
 } from '@material-ui/core';
 import './Column.css';
 import MainCard from '../components/MainCard';
@@ -23,6 +24,7 @@ border: 1px solid lightgrey;
 background-color: white;
 border-radius: 2px;
 width: 100%;
+min-width: 32%;
 
 display: flex;
 flex-direction: column;
@@ -160,8 +162,10 @@ const Column = ({ column, index, tasks, columns, columnOrder, createNewTask, del
               {addColumn &&
                 <div style={{width: '100%', display: 'flex', flexDirection: 'row',
                 justifyContent: 'space-between', marginTop: '20px'}}>
+                  <FormControl>
                   <form onSubmit={e => {
                     e.preventDefault();
+                    console.log('clicked');
                     createNewColumn(newColumnTitle);
                     setAddColumn(false);
                     setNewColumnTitle('');
@@ -173,22 +177,25 @@ const Column = ({ column, index, tasks, columns, columnOrder, createNewTask, del
                       placeholder="Title"
                       onChange={e => setNewColumnTitle(e.target.value)}
                       required
-                    /> */}
+                    />
+                    <button><i className="fas fa-check"></i></button> */}
                     <Input
                       type="text"
                       name="newColumnTitle"
+                      //value={e => createNewColumn(e.target.value)}
                       placeholder="Title"
                       onChange={e => setNewColumnTitle(e.target.value)}
                       required
                       style={{ width: "50%", margin: "10px"}}
-                      inputProps={{ 'name': 'newColumnTitle' }}
+                      // inputProps={{ 'aria-label': 'newColumnTitle' }}
+                      // aria-label="newColumnTitle"
                     />
-                    {/* <button><i className="fas fa-check"></i></button> */}
-                    <IconButton name="newColumnTitle">
+                    <IconButton onClick={() => createNewColumn(newColumnTitle)}>
                       <CheckCircleIcon
                         //color="primary"
                         fontSize="small"
                         style={{ color: "#8bc34a"}}
+                        
                       />
                     </IconButton>
 
@@ -202,6 +209,7 @@ const Column = ({ column, index, tasks, columns, columnOrder, createNewTask, del
                     </IconButton>
                     {/* <button onClick={() => setAddColumn(false)}><i className="fas fa-times"></i></button> */}
                   </form>
+                  </FormControl>
                 </div>
               }
 
